@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { useHistory } from 'react-router-dom'
 
 import { makeStyles } from '@material-ui/core/styles'
 import ListItemAvatar from '@material-ui/core/ListItemAvatar'
@@ -7,8 +9,14 @@ import Avatar from '@material-ui/core/Avatar'
 import IconButton from '@material-ui/core/IconButton'
 import TimelineIcon from '@material-ui/icons/Timeline'
 import DeleteIcon from '@material-ui/icons/Delete'
+import moment from 'moment'
 
-import { ListItem, Container } from './styles'
+import PopupConfirmActions from 'components/blocks/PopupConfirmActions'
+import Modal from 'components/blocks/Modal'
+import { deleteCharts } from 'actions'
+import { ROUT_FOR_CHARTS_PAGE } from 'constants.js'
+
+import { ListItem, Container, Button } from './styles'
 
 const useStyles = makeStyles((theme) => ({
   button: {
@@ -18,26 +26,63 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MainMenuListItem(props) {
   const { data } = props
+  const dispatch = useDispatch()
+  const history = useHistory()
   const classes = useStyles()
+  const [openModal, setOpenModal] = useState(false)
+
+  const handleClickOpen = () => {
+    history.push(ROUT_FOR_CHARTS_PAGE + `?id=${data.id}`)
+  }
+
+  const handleClickDelete = () => {
+    setOpenModal(true)
+  }
+
+  const ConfirmDelete = () => {
+    setOpenModal(false)
+    dispatch(deleteCharts({ root: 'charts', entityId: data.id }))
+  }
+
+  const CancelDelete = () => {
+    setOpenModal(false)
+  }
 
   return (
-    <Container>
-      <div>
-        <ListItem key={Math.random()}>
-          <ListItemAvatar>
-            <Avatar>
-              <TimelineIcon />
-            </Avatar>
-          </ListItemAvatar>
-          <ListItemText primary="Name for map" secondary={'20.03.2021'} />
-        </ListItem>
-      </div>
+    <>
+      <Container>
+        <div>
+          <ListItem key={data.id}>
+            <ListItemAvatar>
+              <Avatar>
+                <TimelineIcon />
+              </Avatar>
+            </ListItemAvatar>
+            <ListItemText primary={data.name} secondary={`${moment.unix(data.date / 1000).format('L HH:mm')}`} />
+          </ListItem>
+        </div>
 
-      <div>
-        <IconButton className={classes.button} edge="end" aria-label="delete">
-          <DeleteIcon className={classes.icon} />
-        </IconButton>
-      </div>
-    </Container>
+        <div>
+          <Button variant="contained" color="primary" onClick={handleClickOpen}>
+            Открыть
+          </Button>
+          <IconButton
+            className={classes.button}
+            edge="end"
+            aria-label="delete"
+            onClick={handleClickDelete}>
+            <DeleteIcon className={classes.icon} />
+          </IconButton>
+        </div>
+      </Container>
+      <Modal open={openModal}>
+        <PopupConfirmActions
+          callback={{
+            confirm: ConfirmDelete,
+            cancel: CancelDelete,
+          }}
+        />
+      </Modal>
+    </>
   )
 }

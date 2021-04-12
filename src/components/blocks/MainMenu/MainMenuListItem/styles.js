@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 
 import MaterialListItem from '@material-ui/core/ListItem'
+import MaterialButton from '@material-ui/core/Button'
 
 export const ListItem = styled(MaterialListItem)`
   display: flex;
@@ -16,4 +17,7 @@ export const Container = styled.div`
   &:hover {
     background-color: ${props => props.theme.error};
   }
+`
+
+export const Button = styled(MaterialButton)`
 `

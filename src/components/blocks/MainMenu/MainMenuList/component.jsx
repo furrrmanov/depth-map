@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { useSelector } from 'react-redux'
 
 import { makeStyles } from '@material-ui/core/styles'
 import List from '@material-ui/core/List'
@@ -14,12 +15,11 @@ const useStyles = makeStyles((theme) => ({
 
 export default function MainMenuList() {
   const classes = useStyles()
-
-  const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+  const charts = useSelector((state) => state.charts.data)
 
   return (
     <List className={classes.list} dense={false}>
-      {arr.map((item, index) => {
+      {charts.map((item, index) => {
         return <MainMenuListItem data={item} key={index} />
       })}
     </List>
