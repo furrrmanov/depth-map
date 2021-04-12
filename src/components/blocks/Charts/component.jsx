@@ -1,10 +1,16 @@
+import React, { useState } from 'react'
 import { Line } from 'react-chartjs-2'
 
+import { Wrapper, ButtonContainer, ChartsContainer } from './styles'
+
 export default function Charts() {
-  const x = [65, 62, 59, 56, 53, 50, 47, 44, 41, 39]
-  const y = [12, 8, 8, 7, 5, 5, 5, 4, 4, 2]
+  const [turnovers, setTurnovers] = useState([])
+  const [depth, setDepth] = useState([])
+  // const x = [65, 62, 59, 56, 53, 50, 47, 44, 41, 39]
+  // const y = [12, 8, 8, 7, 5, 5, 5, 4, 4, 2]
+
   const chartData = {
-    labels: x,
+    labels: turnovers,
     datasets: [
       {
         fill: 'start',
@@ -24,37 +30,42 @@ export default function Charts() {
         pointHoverBorderWidth: 2,
         pointRadius: 1,
         pointHitRadius: 10,
-        data: y,
+        data: depth,
       },
     ],
   }
 
   return (
-    <div>
-      <Line
-        data={chartData}
-        options={{
-          maintainAspectRatio: false,
-          scales: {
-            yAxes: [
-              {
-                ticks: {
-                  reverse: true,
+    <Wrapper>
+      <ButtonContainer>
+        <button>create</button>
+      </ButtonContainer>
+      <ChartsContainer>
+        <Line
+          data={chartData}
+          options={{
+            maintainAspectRatio: false,
+            scales: {
+              yAxes: [
+                {
+                  ticks: {
+                    reverse: true,
+                  },
                 },
-              },
-            ],
-            xAxes: [
-              {
-                ticks: {
-                  reverse: true,
+              ],
+              xAxes: [
+                {
+                  ticks: {
+                    reverse: true,
+                  },
                 },
-              },
-            ],
-          },
-        }}
-        height={400}
-        width={600}
-      />
-    </div>
+              ],
+            },
+          }}
+          height={400}
+          width={600}
+        />
+      </ChartsContainer>
+    </Wrapper>
   )
 }
