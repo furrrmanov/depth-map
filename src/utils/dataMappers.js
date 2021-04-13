@@ -4,3 +4,10 @@ export const transformDataList = (data) => {
     return acc
   }, [])
 }
+
+export const filteredEntityList = (data, id = '', listName) => {
+  const filteredData = data.find((item) => item.id === id)
+  return filteredData && filteredData[`${listName}`]
+    ? filteredData[`${listName}`]
+    : []
+}

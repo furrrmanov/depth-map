@@ -1,13 +1,57 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { useHistory, useLocation } from 'react-router-dom'
 import { Line } from 'react-chartjs-2'
 
-import { Wrapper, ButtonContainer, ChartsContainer } from './styles'
+import { makeStyles } from '@material-ui/core/styles'
+
+import CreatePointPopup from 'components/blocks/CreatePointPopup'
+import Modal from 'components/blocks/Modal'
+import { ROUT_FOR_LANDING_PAGE } from 'constants.js'
+
+import { Wrapper, ButtonContainer, ChartsContainer, Button } from './styles'
+
+const useStyles = makeStyles((theme) => ({
+  button: {
+    marginLeft: '10px',
+  },
+  charts: {
+    height: 'calc(100vh - 200px)',
+  },
+}))
 
 export default function Charts() {
+  const classes = useStyles()
+  const history = useHistory()
+  const params = new URLSearchParams(useLocation().search).get('id')
+  const [openModal, setOpenModal] = useState(false)
   const [turnovers, setTurnovers] = useState([])
   const [depth, setDepth] = useState([])
-  // const x = [65, 62, 59, 56, 53, 50, 47, 44, 41, 39]
-  // const y = [12, 8, 8, 7, 5, 5, 5, 4, 4, 2]
+  const pointsList = useSelector((state) => state.charts.data).find(
+    (item) => item.id === params
+  )
+
+  const handleClickMenu = () => {
+    history.push(ROUT_FOR_LANDING_PAGE)
+  }
+
+  const handleClickSave = () => {
+    console.log('save')
+  }
+
+  const handleClickAddPoint = () => {
+    setOpenModal(true)
+  }
+
+  const closeModal = () => {
+    setOpenModal(false)
+  }
+
+  useEffect(() => {
+    pointsList.points?.sort((a, b) => b.turnovers - a.turnovers)
+    setTurnovers(pointsList.points?.map((item) => item.turnovers))
+    setDepth(pointsList.points?.map((item) => item.time))
+  }, [pointsList])
 
   const chartData = {
     labels: turnovers,
@@ -38,9 +82,26 @@ export default function Charts() {
   return (
     <Wrapper>
       <ButtonContainer>
-        <button>create</button>
+        <Button variant="contained" color="primary" onClick={handleClickMenu}>
+          Меню
+        </Button>
+        <div>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleClickAddPoint}>
+            Точка
+          </Button>
+          <Button
+            className={classes.button}
+            variant="contained"
+            color="primary"
+            onClick={handleClickSave}>
+            Сохранить
+          </Button>
+        </div>
       </ButtonContainer>
-      <ChartsContainer>
+      <ChartsContainer className={classes.charts}>
         <Line
           data={chartData}
           options={{
@@ -66,6 +127,14 @@ export default function Charts() {
           width={600}
         />
       </ChartsContainer>
+      <Modal open={openModal}>
+        <CreatePointPopup
+          callback={{
+            closeModal: closeModal,
+          }}
+          chartsId={params}
+        />
+      </Modal>
     </Wrapper>
   )
 }

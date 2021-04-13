@@ -27,6 +27,7 @@ export const sendDataInFirebaseDb = (data) => {
 }
 
 export const getDataInFirebaseDb = ({ root }) => {
+  console.log(root)
   return database.ref(`${root}`).on('value', (snapshot) => {
     const data = snapshot.val()
     store.dispatch(setCharts(transformDataList(Object.entries(data))))
@@ -37,6 +38,16 @@ export const deleteEntityInCollection = (value) => {
   return database.ref(value.collectionName).once('value', (snpsht) => {
     snpsht.forEach((dp) => {
       database.ref(`${value.collectionRoot}${value.id}`).remove()
+    })
+  })
+}
+
+export const updateEntityInCollection = (value) => {
+  return database.ref(value.collectionName).once('value', (snpsht) => {
+    snpsht.forEach((dp) => {
+      database
+        .ref(`${value.collectionRoot}${value.id}`)
+        .update({ [value.itemName]: value.data })
     })
   })
 }

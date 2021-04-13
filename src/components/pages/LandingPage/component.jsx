@@ -11,8 +11,7 @@ export default function LandingPage() {
   const dispatch = useDispatch()
   useEffect(() => {
     dispatch(setChartsRequest())
-  }, [dispatch])
-
+  }, [dispatch]) 
   return (
     <Wrapper>
       <Header />

@@ -4,6 +4,7 @@ import {
   watchFetchChartsRequest,
   watchCreateCharts,
   watchDeleteCharts,
+  watchCreatePoint,
 } from './charts'
 
 export default function* rootSaga() {
@@ -11,5 +12,6 @@ export default function* rootSaga() {
     watchFetchChartsRequest(),
     watchCreateCharts(),
     watchDeleteCharts(),
+    watchCreatePoint(),
   ])
 }

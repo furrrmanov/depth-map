@@ -16,11 +16,15 @@ import Modal from 'components/blocks/Modal'
 import { deleteCharts } from 'actions'
 import { ROUT_FOR_CHARTS_PAGE } from 'constants.js'
 
-import { ListItem, Container, Button } from './styles'
+import { ListItem, Container, Button, Info, ButtonContainer } from './styles'
 
 const useStyles = makeStyles((theme) => ({
   button: {
     marginRight: '10px',
+  },
+  text: {
+    wordBreak: 'break-word',
+    width: '80%',
   },
 }))
 
@@ -51,18 +55,22 @@ export default function MainMenuListItem(props) {
   return (
     <>
       <Container>
-        <div>
+        <Info>
           <ListItem key={data.id}>
             <ListItemAvatar>
               <Avatar>
                 <TimelineIcon />
               </Avatar>
             </ListItemAvatar>
-            <ListItemText primary={data.name} secondary={`${moment.unix(data.date / 1000).format('L HH:mm')}`} />
+            <ListItemText
+              className={classes.text}
+              primary={data.name}
+              secondary={`${moment.unix(data.date / 1000).format('L HH:mm')}`}
+            />
           </ListItem>
-        </div>
+        </Info>
 
-        <div>
+        <ButtonContainer>
           <Button variant="contained" color="primary" onClick={handleClickOpen}>
             Открыть
           </Button>
@@ -73,7 +81,7 @@ export default function MainMenuListItem(props) {
             onClick={handleClickDelete}>
             <DeleteIcon className={classes.icon} />
           </IconButton>
-        </div>
+        </ButtonContainer>
       </Container>
       <Modal open={openModal}>
         <PopupConfirmActions

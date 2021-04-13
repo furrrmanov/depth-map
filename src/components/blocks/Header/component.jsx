@@ -80,10 +80,10 @@ export default function Header() {
               variant="contained"
               onClick={handleClickButtonOk}
               disabled={!createdName}>
-              Ok
+              Да
             </PopupButton>
             <PopupButton variant="contained" onClick={handleClickButtonCancel}>
-              Cancel
+              Отмена
             </PopupButton>
           </PopupButtonContainer>
         </Popup>

@@ -18,10 +18,10 @@ const PopupConfirmActions = forwardRef((props, ref) => {
       <PopupTitle>Вы уверены ?</PopupTitle>
       <PopupButtonContainer>
         <PopupButton variant="contained" onClick={handleClickButtonOk}>
-          Ok
+          Да
         </PopupButton>
         <PopupButton variant="contained" onClick={handleClickButtonCancel}>
-          Cancel
+          Нет
         </PopupButton>
       </PopupButtonContainer>
     </Popup>

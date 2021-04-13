@@ -1,7 +1,7 @@
 export const SET_CHARTS_REQUEST = 'SET_CHARTS_REQUEST'
 export const SET_CHARTS = 'SET_CHARTS'
 export const CREATE_CHARTS = 'CREATE_CHARTS'
-export const DELETE_CHARTS = 'DELETE_CHARTS' 
+export const DELETE_CHARTS = 'DELETE_CHARTS'
 
 export const setChartsRequest = () => ({
   type: SET_CHARTS_REQUEST,
