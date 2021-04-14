@@ -35,10 +35,6 @@ export default function Charts() {
     history.push(ROUT_FOR_LANDING_PAGE)
   }
 
-  const handleClickSave = () => {
-    console.log('save')
-  }
-
   const handleClickAddPoint = () => {
     setOpenModal(true)
   }
@@ -91,13 +87,6 @@ export default function Charts() {
             color="primary"
             onClick={handleClickAddPoint}>
             Точка
-          </Button>
-          <Button
-            className={classes.button}
-            variant="contained"
-            color="primary"
-            onClick={handleClickSave}>
-            Сохранить
           </Button>
         </div>
       </ButtonContainer>
