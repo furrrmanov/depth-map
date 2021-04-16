@@ -1,6 +1,6 @@
-import styled from 'styled-components'
+import styled from "styled-components"
 
-import MaterialButton from '@material-ui/core/Button'
+import MaterialButton from "@material-ui/core/Button"
 
 export const Popup = styled.div`
   position: relative;
@@ -31,6 +31,8 @@ export const TextField = styled.input`
   border: none;
   border-radius: 10px;
   font-size: 18px;
+  text-align: center;
+  -moz-appearance: textfield;
 
   @media screen and (max-width: 600px) {
     height: 40px;

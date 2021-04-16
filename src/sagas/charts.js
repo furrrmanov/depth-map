@@ -1,27 +1,30 @@
-import { takeEvery, put, call, select } from 'redux-saga/effects'
+import { takeEvery, put, call, select } from "redux-saga/effects"
 
-import moment from 'moment'
+import moment from "moment"
 
 import {
   sendDataInFirebaseDb,
   getDataInFirebaseDb,
   deleteEntityInCollection,
   updateEntityInCollection,
-} from 'utils/firebase'
+} from "utils/firebase"
 import {
   SET_CHARTS_REQUEST,
   CREATE_CHARTS,
   DELETE_CHARTS,
   CREATE_POINT,
-} from 'actions'
-import { filteredEntityList } from 'utils/dataMappers'
+  deleteCharts
+} from "actions"
+import { filteredEntityList } from "utils/dataMappers"
 
 export function* watchFetchChartsRequest() {
   yield takeEvery(SET_CHARTS_REQUEST, workerGetCharts)
 }
 
 function* workerGetCharts() {
-  yield getDataInFirebaseDb({ root: 'charts' })
+  try {
+    yield getDataInFirebaseDb({ root: "charts" })
+  } catch {}
 }
 
 export function* watchCreateCharts() {
@@ -34,7 +37,7 @@ function* workerCreateCharts({ payload }) {
       date: moment().valueOf(),
       name: payload.name,
     },
-    root: 'charts',
+    root: "charts",
   }
 
   yield sendDataInFirebaseDb(data)
@@ -46,6 +49,7 @@ export function* watchDeleteCharts() {
 
 function* workerDeleteCharts({ payload }) {
   try {
+    yield put(deleteCharts(payload.entityId))
     yield call(deleteEntityInCollection, {
       collectionName: `/${payload.root}`,
       collectionRoot: `/${payload.root}/`,
@@ -60,7 +64,7 @@ export function* watchCreatePoint() {
 
 function* workerCreatePoint({ payload }) {
   try {
-    console.log('create point', payload)
+    console.log("create point", payload)
 
     const state = yield select()
     const entityList = filteredEntityList(

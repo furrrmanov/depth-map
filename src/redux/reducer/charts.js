@@ -1,4 +1,4 @@
-import { SET_CHARTS_REQUEST, SET_CHARTS } from 'actions'
+import { SET_CHARTS_REQUEST, SET_CHARTS, DELETE_CHARTS } from 'actions'
 
 const initialState = {
   data: [],
@@ -14,6 +14,12 @@ export default function charts(state = initialState, { type, payload }) {
       return {
         ...state,
         data: payload,
+      }
+
+    case DELETE_CHARTS:
+      return {
+        ...state,
+        data: state.data.filter((item) =>  item.id !== payload)
       }
 
     default:

@@ -1,8 +1,8 @@
-import React, { forwardRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import React, { forwardRef, useState } from "react"
+import { useDispatch } from "react-redux"
 
-import { createPoint } from 'actions'
-import Timer from 'components/blocks/Timer'
+import { createPoint } from "actions"
+import Timer from "components/blocks/Timer"
 
 import {
   Popup,
@@ -12,7 +12,7 @@ import {
   ControlsBlock,
   PopupButton,
   InputContainer,
-} from './styles'
+} from "./styles"
 
 const CreatePointPopup = forwardRef((props, ref) => {
   const { callback, chartsId } = props
@@ -28,10 +28,6 @@ const CreatePointPopup = forwardRef((props, ref) => {
     setTime(target.value)
   }
 
-  const handleStopTimer = (value) => {
-    setTime(value)
-  }
-
   const handleClickAdd = () => {
     const newPoint = {
       data: {
@@ -39,8 +35,8 @@ const CreatePointPopup = forwardRef((props, ref) => {
         turnovers: turnovers,
       },
       id: chartsId,
-      itemName: 'points',
-      root: 'charts',
+      itemName: "points",
+      root: "charts",
     }
 
     dispatch(createPoint(newPoint))
@@ -64,21 +60,31 @@ const CreatePointPopup = forwardRef((props, ref) => {
       <InputBlock>
         <InputContainer>
           <span>Обороты: </span>
-          <TextField value={turnovers} onChange={hadleChangeTurnovers} />
+          <TextField
+            value={turnovers}
+            type="number"
+            onChange={hadleChangeTurnovers}
+          />
         </InputContainer>
         <InputContainer>
           <span>Время: </span>
-          <TextField value={time} onChange={handleChangeTime} />
+          <TextField value={time} type="number" onChange={handleChangeTime} />
         </InputContainer>
       </InputBlock>
       <TimerBlock>
-        <Timer callback={{
-          setTime: addTime,
-          resetTime: resetTime
-        }} />
+        <Timer
+          callback={{
+            setTime: addTime,
+            resetTime: resetTime,
+          }}
+        />
       </TimerBlock>
       <ControlsBlock>
-        <PopupButton disabled={ !time || !turnovers} variant="contained" onClick={handleClickAdd}>
+        <PopupButton
+          disabled={!time || !turnovers}
+          variant="contained"
+          onClick={handleClickAdd}
+        >
           Установить
         </PopupButton>
         <PopupButton variant="contained" onClick={hadleClickCancel}>
