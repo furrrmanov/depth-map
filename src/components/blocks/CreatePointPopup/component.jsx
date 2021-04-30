@@ -48,7 +48,7 @@ const CreatePointPopup = forwardRef((props, ref) => {
   }
 
   const addTime = (value) => {
-    setTime(value / 1000)
+    setTime(Math.round(value / 1000))
   }
 
   const resetTime = () => {

@@ -64,8 +64,6 @@ export function* watchCreatePoint() {
 
 function* workerCreatePoint({ payload }) {
   try {
-    console.log("create point", payload)
-
     const state = yield select()
     const entityList = filteredEntityList(
       state[payload.root].data,
